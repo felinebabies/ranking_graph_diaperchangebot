@@ -3,6 +3,8 @@ require 'bundler'
 Bundler.require
 require 'yaml'
 
+require_relative 'lib/bottwitterclient'
+
 currentdir = File.dirname(__FILE__)
 Dotenv.load
 
@@ -29,4 +31,13 @@ end
 g.data 'おむつ交換数', changeCount
 g.labels = labels
 
-g.write('ranking_graph.png')
+graphimgpath = File.join(currentdir,'ranking_graph.png')
+g.write(graphimgpath)
+
+sleep(1)
+
+#グラフを投稿する
+tweetText = ENV["TWEET_TEXT"] || "みんながぼくのおむつを交換してくれた回数を、パパがグラフにしてくれたよ。"
+File.open(graphimgpath, 'rb') do |f|
+  createclient.update_with_media(tweetText, f)
+end
