@@ -3,10 +3,14 @@ require 'bundler'
 Bundler.require
 require 'yaml'
 
+currentdir = File.dirname(__FILE__)
+Dotenv.load
+
 g = Gruff::SideStackedBar.new
 g.title = "ぼくのおむつ替えランキング"
 
-g.font = "C:/WINDOWS/Fonts/MSGOTHIC.TTC"
+fontname = ENV["RENDER_FONT_NAME"] || "mplus-1p-medium.ttf"
+g.font = File.join(currentdir,fontname)
 g.y_axis_increment = 20
 g.marker_font_size = 10
 

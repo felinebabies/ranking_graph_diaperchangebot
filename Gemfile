@@ -3,4 +3,5 @@ source "https://rubygems.org"
 
 # gem "rails"
 gem 'rmagick', :require => 'RMagick'
-gem "gruff"
+gem 'gruff'
+gem 'dotenv'
