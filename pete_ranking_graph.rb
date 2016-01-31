@@ -8,6 +8,19 @@ require_relative 'lib/bottwitterclient'
 currentdir = File.dirname(__FILE__)
 Dotenv.load
 
+#対象ファイル指定
+if(ARGV[0]) then
+  targetFile = ARGV[0]
+else
+  targetFile = "./userdata.yml"
+end
+
+# ファイルが存在しなければ終了
+unless File.exist?(targetFile) then
+  puts "File [#{targetFile}] not exists."
+  exit
+end
+
 g = Gruff::SideStackedBar.new
 g.title = "ぼくのおむつ替えランキング"
 
@@ -16,7 +29,7 @@ g.font = File.join(currentdir,fontname)
 g.y_axis_increment = 20
 g.marker_font_size = 10
 
-rankingData = YAML.load_file("./userdata.yml")
+rankingData = YAML.load_file(targetFile)
 rankingData.sort! do |a, b|
   b["diaperchangepoint"] <=> a["diaperchangepoint"]
 end
